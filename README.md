@@ -33,6 +33,14 @@ npm run build
 npm run preview
 ```
 
+## Repository layout
+
+- `src/` contains the viewer, UR3e model and kinematics, and styles.
+- `tests/` contains the kinematics and CSV import tests.
+- `index.html` is the Vite entry page.
+- `.github/workflows/` contains the GitHub Pages workflow.
+
+
 ## Deploy to GitHub Pages
 
 In the repository’s **Settings → Pages**, set **Source** to **GitHub Actions**. The workflow runs tests and builds on pull requests, then publishes the static `dist/` artifact on pushes to `main`. It can also be run manually from `main`. The build uses relative asset paths so it works under the repository path.
