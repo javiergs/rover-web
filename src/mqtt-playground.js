@@ -87,13 +87,14 @@ export function setupPlayground({ applyPose, getState }) {
 
     let url;
     try {
-      url = new URL(broker.value.trim());
+      url = new URL(broker.value.trim() || broker.placeholder);
       if (url.protocol !== 'wss:' || url.username || url.password || url.hash) throw new Error();
     } catch {
       status.textContent = 'Enter a secure WebSocket broker URL (wss://) without embedded credentials.';
       return;
     }
 
+    broker.value = url.href;
     const attempt = {};
     connection = attempt;
     button.textContent = 'Disconnect';
