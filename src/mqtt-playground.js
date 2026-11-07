@@ -43,10 +43,13 @@ export function setupPlayground({ applyPose, getState }) {
   const broker = get('mqtt-broker');
   const username = get('mqtt-username');
   const password = get('mqtt-password');
-  const prefix = `rover/play/${crypto.randomUUID()}`;
+  const prefix = `rover/play/${crypto.randomUUID().replaceAll('-', '').slice(0, 10)}`;
   const setTopic = `${prefix}/pose/set`;
   const getTopic = `${prefix}/pose/get`;
   get('mqtt-prefix').value = prefix;
+  get('mqtt-state-topic').textContent = `${prefix}/pose/state`;
+  get('mqtt-set-topic').textContent = setTopic;
+  get('mqtt-get-topic').textContent = getTopic;
   get('mqtt-copy').onclick = async () => {
     const field = get('mqtt-prefix');
     field.select();
@@ -54,7 +57,7 @@ export function setupPlayground({ applyPose, getState }) {
       await navigator.clipboard.writeText(prefix);
       get('mqtt-copy').textContent = 'Copied';
     } catch {
-      get('mqtt-copy').textContent = 'Copy selected text';
+      status.textContent = 'Prefix selected. Use your keyboard to copy it.';
     }
   };
 

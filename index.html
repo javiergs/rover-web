@@ -39,7 +39,7 @@
           <p>Send poses to the simulated UR3e and read back its position.</p>
           <form id="mqtt-form" novalidate>
             <label for="mqtt-broker">Broker WebSocket URL</label>
-            <input id="mqtt-broker" type="url" placeholder="wss://your-broker.example/mqtt" required>
+            <input id="mqtt-broker" type="url" placeholder="wss://broker.hivemq.com:8884/mqtt" required>
             <details>
               <summary>Broker credentials (optional)</summary>
               <label for="mqtt-username">Username</label>
@@ -57,13 +57,15 @@
           </div>
           <p>Use only demo data on shared brokers. The session prefix is a topic identifier.</p>
           <details>
-            <summary>Message examples</summary>
-            <p>Append <code>/pose/set</code> and send six joint angles in radians.</p>
+            <summary>Try it in MQTTX</summary>
+            <p>For a short public HiveMQ test, enter <code>wss://broker.hivemq.com:8884/mqtt</code> above. In MQTTX Desktop, choose <code>mqtt://</code>, host <code>broker.hivemq.com</code>, port <code>1883</code>, and leave credentials blank. For your own broker, use its MQTT host and port in MQTTX.</p>
+            <p>In MQTTX, subscribe to <code id="mqtt-state-topic"></code>.</p>
+            <p>Publish six joint angles in radians to <code id="mqtt-set-topic"></code> with Retain off.</p>
             <pre><code>{"j1":0,"j2":-1.57,"j3":1.66,
  "j4":-1.66,"j5":-1.57,"j6":0}</code></pre>
-            <p>Append <code>/pose/get</code> to request the current pose.</p>
+            <p>To request the current pose, publish to <code id="mqtt-get-topic"></code>.</p>
             <pre><code>{"requestId":"demo-1"}</code></pre>
-            <p>Subscribe to <code>/pose/state</code> for the six joints and flange <code>xyz</code> in base-frame millimetres. Replies include the request ID.</p>
+            <p>State messages contain six joint angles and flange <code>xyz</code> in base-frame millimetres. Replies include the request ID.</p>
           </details>
         </section>
       </div>
