@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { Matrix4, Vector3 } from 'three';
-import { dh, jointFrame, parsePoses } from './ur3e.js';
+import { dh, jointFrame, parsePoses } from '../src/ur3e.js';
 
 test('zero pose matches the published UR3e offsets in the base frame', () => {
   const transform = dh.reduce((matrix, joint) => matrix.multiply(jointFrame(0, joint)), new Matrix4());
