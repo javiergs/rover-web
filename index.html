@@ -23,16 +23,18 @@
         <p id="render-error" role="alert" hidden>The 3D model requires a browser with WebGL 2 enabled.</p>
         <div class="viewer-footer"><span>Drag to orbit · Scroll or pinch to zoom</span><span>500 mm reach · Ø128 mm base</span></div>
       </section>
-      <aside class="panel controls" aria-labelledby="joint-heading">
-        <div class="panel-head"><h2 id="joint-heading">Joint pose</h2><button id="reset-pose" type="button">Reset pose</button></div>
-        <div id="joints"></div>
-        <section class="readout" aria-labelledby="flange-heading">
-          <h3 id="flange-heading">Tool flange <small>BASE FRAME / MM</small></h3>
-          <dl id="coordinates"><div><dt>X</dt><dd>—</dd></div><div><dt>Y</dt><dd>—</dd></div><div><dt>Z</dt><dd>—</dd></div></dl>
-          <label class="trace"><input id="show-trace" type="checkbox" checked> Show flange trail</label>
-          <button id="clear-trace" type="button">Clear trail</button>
+      <div class="sidebar">
+        <section class="panel controls" aria-labelledby="joint-heading">
+          <div class="panel-head"><h2 id="joint-heading">Joint pose</h2><button id="reset-pose" type="button">Reset pose</button></div>
+          <div id="joints"></div>
+          <section class="readout" aria-labelledby="flange-heading">
+            <h3 id="flange-heading">Tool flange <small>BASE FRAME / MM</small></h3>
+            <dl id="coordinates"><div><dt>X</dt><dd>—</dd></div><div><dt>Y</dt><dd>—</dd></div><div><dt>Z</dt><dd>—</dd></div></dl>
+            <label class="trace"><input id="show-trace" type="checkbox" checked> Show flange trail</label>
+            <button id="clear-trace" type="button">Clear trail</button>
+          </section>
         </section>
-        <section class="mqtt" aria-labelledby="mqtt-heading">
+        <section class="panel mqtt" aria-labelledby="mqtt-heading">
           <h3 id="mqtt-heading">MQTT message reference</h3>
           <p>Receive-only UR3e joint telemetry. Use this format when integrating a telemetry receiver.</p>
           <dl class="mqtt-topic"><div><dt>Topic</dt><dd><code>/rover/joints</code></dd></div></dl>
@@ -46,9 +48,8 @@
   "j6": 0
 }</code></pre>
         </section>
-      </aside>
+      </div>
     </div>
-    <footer>Universal Robots UR3e · Nominal geometry · Local visualization</footer>
   </main>
   <script type="module" src="./src/main.js"></script>
 </body>
