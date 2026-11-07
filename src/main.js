@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { init } from './init.js';
-import { home, limits, parsePoses } from './ur3e.js';
+import { home, limits } from './ur3e.js';
 
 const get = id => document.getElementById(id);
 const container = get('threejs-container');
@@ -88,36 +88,6 @@ get('show-trace').onchange = event => {
   drawTrail();
   showPose();
 };
-
-let imported = [];
-let importRequest = 0;
-const picker = get('pose-row');
-get('pose-file').onchange = async event => {
-  const request = ++importRequest;
-  const file = event.target.files[0];
-  imported = [];
-  get('pose-picker').hidden = true;
-  get('file-status').textContent = '';
-  if (!file) return;
-  try {
-    const rows = parsePoses(await file.text());
-    if (request !== importRequest) return;
-    imported = rows;
-    picker.value = 1;
-    picker.max = imported.length;
-    get('pose-count').textContent = `of ${imported.length}`;
-    get('pose-picker').hidden = false;
-    get('file-status').textContent = 'Poses loaded. Choose a row to display it.';
-  } catch (error) {
-    if (request === importRequest) get('file-status').textContent = error.message;
-  }
-};
-picker.onchange = () => {
-  const row = imported[picker.valueAsNumber - 1];
-  if (row) applyPose(row);
-};
-get('pose-picker').insertAdjacentHTML('beforeend', ' <button type="button" id="apply-row">View pose</button>');
-get('apply-row').onclick = () => picker.onchange();
 
 showPose();
 if (viewer) {

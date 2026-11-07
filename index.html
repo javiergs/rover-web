@@ -9,16 +9,12 @@
 </head>
 <body>
   <header class="masthead">
-    <div class="brand"><span class="brand-mark" aria-hidden="true">R</span><div><strong>ROVER</strong>
-      <span>Remote Operation and Visualization of Embodied Robots</span></div></div>
-    <span class="badge">Visualization only</span>
+    <div>
+      <h1>ROVER</h1>
+      <p class="brand-expansion">Remote Operation and Visualization of Embodied Robots</p>
+    </div>
   </header>
   <main>
-    <section class="intro" aria-labelledby="title">
-      <p class="eyebrow">ROBOT WORKSPACE / 01</p>
-      <h1 id="title">Explore the UR3e</h1>
-      <p>Inspect a six-axis arm from any angle and visualize joint poses locally.</p>
-    </section>
     <div class="workspace">
       <section class="viewer panel" aria-labelledby="viewer-heading">
         <div class="panel-head"><h2 id="viewer-heading">3D model</h2><button id="reset-camera" type="button">Reset view</button></div>
@@ -35,16 +31,19 @@
           <label class="trace"><input id="show-trace" type="checkbox" checked> Show flange trail</label>
           <button id="clear-trace" type="button">Clear trail</button>
         </section>
-        <section class="csv" aria-labelledby="csv-heading">
-          <h3 id="csv-heading">Import recorded poses</h3>
-          <p id="csv-help">Legacy CSV with two metadata columns and six joint angles in radians. Select a row to view its pose.</p>
-          <input id="pose-file" type="file" accept=".csv,text/csv" aria-labelledby="csv-heading" aria-describedby="csv-help">
-          <div id="pose-picker" hidden>
-            <label for="pose-row">Pose</label>
-            <input id="pose-row" type="number" min="1" value="1" step="1">
-            <span id="pose-count"></span>
-          </div>
-          <p id="file-status" role="status"></p>
+        <section class="mqtt" aria-labelledby="mqtt-heading">
+          <h3 id="mqtt-heading">MQTT message reference</h3>
+          <p>Receive-only UR3e joint telemetry. Use this format when integrating a telemetry receiver.</p>
+          <dl class="mqtt-topic"><div><dt>Topic</dt><dd><code>/rover/joints</code></dd></div></dl>
+          <p>Send a JSON object with numeric joint angles in radians. The keys run from base (<code>j1</code>) through wrist 3 (<code>j6</code>).</p>
+          <pre aria-label="Example joint telemetry payload"><code>{
+  "j1": 0,
+  "j2": -1.5708,
+  "j3": 1.6581,
+  "j4": -1.6581,
+  "j5": -1.5708,
+  "j6": 0
+}</code></pre>
         </section>
       </aside>
     </div>
