@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { init } from './init.js';
-import { dh, home, jointFrame, limits } from './ur3e.js';
+import { flangePosition, home, limits, sampleFlangeTrail } from './ur3e.js';
 import { poseState, setupPlayground } from './mqtt-playground.js';
 
 const get = id => document.getElementById(id);
@@ -28,18 +28,27 @@ function drawTrail() {
 }
 
 let xyz;
+let previousPose;
 function showPose() {
-  const flange = viewer ? viewer.setPose(pose) : new THREE.Vector3().setFromMatrixPosition(
-    dh.reduce((matrix, joint, i) => matrix.multiply(jointFrame(THREE.MathUtils.degToRad(pose[i]), joint)),
-      new THREE.Matrix4()));
+  const flange = viewer ? viewer.setPose(pose) : flangePosition(pose);
   xyz = { x: flange.x * 1000, y: flange.y * 1000, z: flange.z * 1000 };
   flange.toArray().forEach((metres, i) => {
     coordinates[i].textContent = (metres * 1000).toFixed(1);
   });
-  if (trail.visible && (!trailPoints.length || flange.distanceTo(trailPoints.at(-1)) >= 0.001)) {
-    trailPoints.push(flange);
-    if (trailPoints.length > 1000) trailPoints.shift();
-    drawTrail();
+  if (trail.visible) {
+    const intermediate = previousPose ? sampleFlangeTrail(previousPose, pose) : [];
+    let changed = false;
+    for (const point of [...intermediate, flange]) {
+      if (!trailPoints.length || point.distanceTo(trailPoints.at(-1)) >= 0.001) {
+        trailPoints.push(point);
+        changed = true;
+      }
+    }
+    if (changed) {
+      if (trailPoints.length > 1000) trailPoints.splice(0, trailPoints.length - 1000);
+      drawTrail();
+    }
+    previousPose = [...pose];
   }
 }
 
@@ -88,11 +97,13 @@ const publishState = setupPlayground({ applyPose, getState: requestId => poseSta
 get('reset-pose').onclick = () => applyPose(home);
 get('reset-camera').onclick = () => viewer?.controls.reset();
 get('clear-trace').onclick = () => {
+  previousPose = undefined;
   trailPoints.length = 0;
   drawTrail();
 };
 get('show-trace').onchange = event => {
   trail.visible = event.target.checked;
+  previousPose = undefined;
   trailPoints.length = 0;
   drawTrail();
   showPose();
