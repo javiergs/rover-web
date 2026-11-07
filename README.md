@@ -1,5 +1,7 @@
 # ROVER — Remote Operation and Visualization of Embodied Robots
 
+[Open the live ROVER app](https://javiergs.github.io/rover-web/)
+
 ROVER is a standalone browser workspace for visualizing the Universal Robots UR3e. This phase supports local 3D visualization only. The app has no hardware connection, MQTT, teleoperation, automatic playback, or robot command output.
 
 ## Use the viewer
