@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { init } from './init.js';
-import { home, limits } from './ur3e.js';
+import { dh, home, jointFrame, limits } from './ur3e.js';
+import { poseState, setupPlayground } from './mqtt-playground.js';
 
 const get = id => document.getElementById(id);
 const container = get('threejs-container');
@@ -26,9 +27,12 @@ function drawTrail() {
   trail.geometry = new THREE.BufferGeometry().setFromPoints(trailPoints);
 }
 
+let xyz;
 function showPose() {
-  if (!viewer) return;
-  const flange = viewer.setPose(pose);
+  const flange = viewer ? viewer.setPose(pose) : new THREE.Vector3().setFromMatrixPosition(
+    dh.reduce((matrix, joint, i) => matrix.multiply(jointFrame(THREE.MathUtils.degToRad(pose[i]), joint)),
+      new THREE.Matrix4()));
+  xyz = { x: flange.x * 1000, y: flange.y * 1000, z: flange.z * 1000 };
   flange.toArray().forEach((metres, i) => {
     coordinates[i].textContent = (metres * 1000).toFixed(1);
   });
@@ -57,11 +61,13 @@ const inputs = names.map((name, index) => {
     number.value = pose[index];
     showPose();
   });
+  slider.addEventListener('change', () => publishState());
   number.addEventListener('change', () => {
     const value = number.valueAsNumber;
     if (Number.isFinite(value)) pose[index] = THREE.MathUtils.clamp(value, -limits[index], limits[index]);
     number.value = slider.value = pose[index];
     showPose();
+    publishState();
   });
   get('joints').append(row);
   return { slider, number };
@@ -74,7 +80,10 @@ function applyPose(angles) {
     inputs[index].number.value = Number(angle.toFixed(3));
   });
   showPose();
+  publishState();
 }
+
+const publishState = setupPlayground({ applyPose, getState: requestId => poseState(pose, xyz, requestId) });
 
 get('reset-pose').onclick = () => applyPose(home);
 get('reset-camera').onclick = () => viewer?.controls.reset();

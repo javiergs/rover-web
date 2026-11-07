@@ -35,18 +35,36 @@
           </section>
         </section>
         <section class="panel mqtt" aria-labelledby="mqtt-heading">
-          <h3 id="mqtt-heading">MQTT message reference</h3>
-          <p>Receive-only UR3e joint telemetry. Use this format when integrating a telemetry receiver.</p>
-          <dl class="mqtt-topic"><div><dt>Topic</dt><dd><code>/rover/joints</code></dd></div></dl>
-          <p>Send a JSON object with numeric joint angles in radians. The keys run from base (<code>j1</code>) through wrist 3 (<code>j6</code>).</p>
-          <pre aria-label="Example joint telemetry payload"><code>{
-  "j1": 0,
-  "j2": -1.5708,
-  "j3": 1.6581,
-  "j4": -1.6581,
-  "j5": -1.5708,
-  "j6": 0
-}</code></pre>
+          <h3 id="mqtt-heading">MQTT playground</h3>
+          <p>Send poses to the simulated UR3e and read back its position.</p>
+          <form id="mqtt-form" novalidate>
+            <label for="mqtt-broker">Broker WebSocket URL</label>
+            <input id="mqtt-broker" type="url" placeholder="wss://your-broker.example/mqtt" required>
+            <details>
+              <summary>Broker credentials (optional)</summary>
+              <label for="mqtt-username">Username</label>
+              <input id="mqtt-username" autocomplete="off">
+              <label for="mqtt-password">Password</label>
+              <input id="mqtt-password" type="password" autocomplete="off">
+            </details>
+            <button id="mqtt-toggle" type="submit">Connect</button>
+            <span id="mqtt-status" role="status">Disconnected</span>
+          </form>
+          <label for="mqtt-prefix">Session topic prefix</label>
+          <div class="mqtt-copy">
+            <input id="mqtt-prefix" readonly>
+            <button id="mqtt-copy" type="button">Copy</button>
+          </div>
+          <p>Use only demo data on shared brokers. The session prefix is a topic identifier.</p>
+          <details>
+            <summary>Message examples</summary>
+            <p>Append <code>/pose/set</code> and send six joint angles in radians.</p>
+            <pre><code>{"j1":0,"j2":-1.57,"j3":1.66,
+ "j4":-1.66,"j5":-1.57,"j6":0}</code></pre>
+            <p>Append <code>/pose/get</code> to request the current pose.</p>
+            <pre><code>{"requestId":"demo-1"}</code></pre>
+            <p>Subscribe to <code>/pose/state</code> for the six joints and flange <code>xyz</code> in base-frame millimetres. Replies include the request ID.</p>
+          </details>
         </section>
       </div>
     </div>

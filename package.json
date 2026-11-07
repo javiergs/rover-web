@@ -9,6 +9,7 @@
     "test": "node --test"
   },
   "dependencies": {
+    "mqtt": "^5.16.1",
     "three": "^0.180.0"
   },
   "devDependencies": {
