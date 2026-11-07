@@ -10,7 +10,19 @@
 * { box-sizing: border-box; }
 body { margin: 0; }
 .masthead, main { width: min(100% - 2rem, 86rem); margin-inline: auto; }
-.masthead { padding: clamp(1.5rem, 4vw, 3rem) 0 1.25rem; }
+.masthead {
+  display: flex;
+  align-items: center;
+  gap: clamp(.75rem, 2vw, 1.5rem);
+  padding: clamp(1.5rem, 4vw, 3rem) 0 1.25rem;
+}
+.brand-logo {
+  flex: none;
+  display: block;
+  width: clamp(3.5rem, 11vw, 7rem);
+  height: auto;
+  border-radius: .65rem;
+}
 h1 { color: #fff; font-size: clamp(3rem, 8vw, 5.5rem); line-height: 1; letter-spacing: .06em; margin: 0; }
 .masthead .brand-expansion { color: var(--accent); font-weight: 650; margin-top: .5rem; }
 small { color: var(--accent); letter-spacing: .1em; font-size: .69rem; font-weight: 700; }
