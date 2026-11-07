@@ -94,6 +94,10 @@ export function setupPlayground({ applyPose, getState }) {
       return;
     }
 
+    if (url.href === broker.placeholder && (username.value || password.value)) {
+      status.textContent = 'Clear the credentials before connecting to the public test broker.';
+      return;
+    }
     broker.value = url.href;
     const attempt = {};
     connection = attempt;
