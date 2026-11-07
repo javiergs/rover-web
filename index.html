@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore the Universal Robots UR3e in ROVER’s standalone 3D visualization workspace.">
+  <title>ROVER — Remote Operation and Visualization of Embodied Robots</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">R</span><div><strong>ROVER</strong>
+      <span>Remote Operation and Visualization of Embodied Robots</span></div></div>
+    <span class="badge">Visualization only</span>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">ROBOT WORKSPACE / 01</p>
+      <h1 id="title">Explore the UR3e</h1>
+      <p>Inspect a six-axis arm from any angle and visualize joint poses locally.</p>
+    </section>
+    <div class="workspace">
+      <section class="viewer panel" aria-labelledby="viewer-heading">
+        <div class="panel-head"><h2 id="viewer-heading">3D model</h2><button id="reset-camera" type="button">Reset view</button></div>
+        <div id="threejs-container"></div>
+        <p id="render-error" role="alert" hidden>The 3D model requires a browser with WebGL 2 enabled.</p>
+        <div class="viewer-footer"><span>Drag to orbit · Scroll or pinch to zoom</span><span>500 mm reach · Ø128 mm base</span></div>
+      </section>
+      <aside class="panel controls" aria-labelledby="joint-heading">
+        <div class="panel-head"><h2 id="joint-heading">Joint pose</h2><button id="reset-pose" type="button">Reset pose</button></div>
+        <div id="joints"></div>
+        <section class="readout" aria-labelledby="flange-heading">
+          <h3 id="flange-heading">Tool flange <small>BASE FRAME / MM</small></h3>
+          <dl id="coordinates"><div><dt>X</dt><dd>—</dd></div><div><dt>Y</dt><dd>—</dd></div><div><dt>Z</dt><dd>—</dd></div></dl>
+          <label class="trace"><input id="show-trace" type="checkbox" checked> Show flange trail</label>
+          <button id="clear-trace" type="button">Clear trail</button>
+        </section>
+        <section class="csv" aria-labelledby="csv-heading">
+          <h3 id="csv-heading">Import recorded poses</h3>
+          <p id="csv-help">Legacy CSV with two metadata columns and six joint angles in radians. Select a row to view its pose.</p>
+          <input id="pose-file" type="file" accept=".csv,text/csv" aria-labelledby="csv-heading" aria-describedby="csv-help">
+          <div id="pose-picker" hidden>
+            <label for="pose-row">Pose</label>
+            <input id="pose-row" type="number" min="1" value="1" step="1">
+            <span id="pose-count"></span>
+          </div>
+          <p id="file-status" role="status"></p>
+        </section>
+      </aside>
+    </div>
+    <footer>Universal Robots UR3e · Nominal geometry · Local visualization</footer>
+  </main>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
