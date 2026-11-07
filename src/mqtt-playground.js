@@ -102,9 +102,9 @@ export function setupPlayground({ applyPose, getState }) {
     };
 
     try {
-      const { connect } = await import('mqtt');
+      const { default: mqtt } = await import('mqtt');
       if (connection !== attempt) return;
-      const client = connect(url.href, options);
+      const client = mqtt.connect(url.href, options);
       attempt.client = client;
       client.on('error', () => {
         if (connection === attempt) disconnect('Connection failed. Check the broker URL and credentials.');
