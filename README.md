@@ -1,9 +1,14 @@
 Project:
 # Remote Operation and Visualization of Embodied Robots (ROVER)
 
-[Open the live ROVER app](https://javiergs.github.io/rover-web/)
+Module:
+
+## ROVER Web
 
 Explore the Universal Robots UR3e in 3D, adjust its joint angles, and inspect the tool flange position.
+
+[Open the live ROVER app](https://javiergs.github.io/rover-web/)
+
 
 ## Use the viewer
 
