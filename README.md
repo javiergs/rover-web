@@ -1,4 +1,5 @@
-# ROVER — Remote Operation and Visualization of Embodied Robots
+Project:
+# Remote Operation and Visualization of Embodied Robots (ROVER)
 
 [Open the live ROVER app](https://javiergs.github.io/rover-web/)
 
