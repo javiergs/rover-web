@@ -9,6 +9,8 @@ Explore the Universal Robots UR3e in 3D, adjust its joint angles, and inspect th
 
 [Open the live ROVER app](https://javiergs.github.io/rover-web/)
 
+![Universal Robots Web interface showing a 3D robot view, joint controls, and tool-position readouts](assets/web-screenshot.png)
+
 
 ## Use the viewer
 
