@@ -33,3 +33,19 @@ Explore the Universal Robots UR3e in 3D, adjust its joint angles, and inspect th
 Joint angles are in radians. The state message reports the simulated flange position in base-frame millimetres. ROVER publishes state after connecting, after pose changes, and in response to requests. Only a requested reply echoes the request ID. Publish messages without the retain flag.
 
 Use demo data on shared brokers. Each page load generates a new topic prefix, and anyone with access to those topics can interact with the simulation.
+
+## Other ROVER applications
+
+[ROVER Desktop](https://github.com/javiergs/rover-desktop) provides an installable application for Universal Robots e-Series arms. It supports offline simulation and, when connected to URSim or a physical controller, real-time robot-state visualization and motion control. ROVER Web is a browser-based UR3e simulator with an MQTT playground; it does not require a robot connection.
+
+## Safety
+
+ROVER Web is an experimental **simulation**, not a robot controller. Its joint controls and MQTT playground change the simulated UR3e displayed in your browser. The app does not directly connect to or control a physical robot.
+
+Treat public MQTT brokers as shared, untrusted spaces. A session topic prefix is **not** authentication; someone who knows it can send messages to your simulation. Use demo data only. Do not share credentials or sensitive robot/network information, and do not connect the demo topics to physical robot motion without independent validation and safety safeguards.
+
+## Feedback
+
+[Open an issue](https://github.com/javiergs/rover-web/issues/new/choose) to report a bug, suggest a feature, or flag unclear instructions.
+
+For bugs, include your browser, operating system, whether MQTT was connected, steps to reproduce, what you expected, and what happened. Screenshots or sanitized browser-console messages are welcome; never post broker credentials.
