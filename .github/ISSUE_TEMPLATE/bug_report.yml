@@ -1,0 +1,66 @@
+name: Bug report
+description: Report a problem when using ROVER Web.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where did the problem occur?
+      options:
+        - 3D viewer or camera
+        - Joint pose controls
+        - Tool flange position or trail
+        - MQTT playground
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: "e.g., Chrome 131, Safari 18"
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: "e.g., macOS, Windows, iOS, Android"
+    validations:
+      required: true
+  - type: dropdown
+    id: mqtt
+    attributes:
+      label: MQTT connection status
+      options:
+        - Not using MQTT
+        - Connected
+        - Connection failed
+        - Disconnected unexpectedly
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Describe what you did so others can reproduce the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Additional details
+      description: Screenshots and sanitized browser-console messages are welcome. Do not include broker credentials, tokens, or sensitive network details.
